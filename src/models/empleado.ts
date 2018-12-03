@@ -1,8 +1,9 @@
 
 const empleado = (sequelize: any, DataTypes: any) => {
-	const Empleado = sequelize.define("Empleado", {
-		id_empleado: {
-			type: DataTypes.UUIDV4,
+	const Empleado = sequelize.define("Empleados", {
+		uuid: {
+			type: DataTypes.STRING,
+			primaryKey: true, 
 		},
 		nombre: {
 			type: DataTypes.STRING,
@@ -23,12 +24,19 @@ const empleado = (sequelize: any, DataTypes: any) => {
 		estatus: {
 			type: DataTypes.BOOLEAN,
 		},
+		// tslint:disable-next-line:object-literal-sort-keys
+		habilidades: {
+			type: DataTypes.STRING,
+		},
+		habilidades_desc: {
+			type: DataTypes.STRING,
+		},
 	});
-	Empleado.associate = ( models: any ) => {
-		Empleado.hasMany( models.habilidades )
-		Empleado.hasMany( models.huellas )
-		return;
+
+	Empleado.associate = (models: any) => {
+		Empleado.hasMany(models.huellas)
 	}
+
 	return Empleado;
 }
 export default empleado;

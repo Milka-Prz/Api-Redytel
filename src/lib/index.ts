@@ -1,11 +1,11 @@
 import Sequelize from "sequelize";
 
-const basededatos: string = process.env.BD || "Redytel";
-const usuario: string = process.env.USER  || "sa";
-const pwd: string = process.env.PWD || "milka";
-const host: string = process.env.HOST || "127.0.0.1";
+const db: string = process.env.BD || "Redytel";
+const user: string = process.env.USER_DB  || "sa";
+const pwd: string = "milka";
+const host: string = process.env.HOST || "localhost";
 
-const sequelize = new Sequelize ( basededatos, usuario, pwd, {
+const sequelize = new Sequelize ( db, user, pwd, {
     dialect: "mssql",
     host,
     operatorsAliases: false,
@@ -17,10 +17,18 @@ const sequelize = new Sequelize ( basededatos, usuario, pwd, {
    },
 });
 
-const models = {
+const Models: any = {
 	empleado: sequelize.import("../models/empleado"),
-	habilidades: sequelize.import("../models/habilidades"),
 	huellas: sequelize.import("../models/huellas"),
-}
+};
 
-export default models;
+Object.keys(Models).forEach( (key: any) =>{
+	if('associate' in Models[key] ) {
+		Models[key].associate(Models)
+	}
+});
+
+Models.sequelize = sequelize;
+Models.Sequelize = Sequelize;
+
+export default Models;

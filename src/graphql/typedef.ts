@@ -1,45 +1,58 @@
 import { gql } from "apollo-server";
 const typegql = gql`
-
+scalar Date
 type Empleado {
-  id_empleado: String!
-  nombre: String!
-  apellido: String!
-  email: String!
-  direccion: String!
-  fech_nac: String!
-  estatus: Boolean!
+	uuid: ID!
+	nombre: String!
+	apellido: String!
+	email: String!
+	direccion: String!
+	fech_nac: Date!
+	estatus: Boolean!
+	habilidades: String!
+	habilidades_desc: String!
+	createAt: Date!
+	updateAt: Date!
+}
+type EmpleadoD {
+	puntaje: Int!
+	uuid: ID!
+	nombre: String!
+	apellido: String!
+	email: String!
+	direccion: String!
+	fech_nac: Date!
+	estatus: Boolean!
+	habilidades: String!
+	habilidades_desc: String!
+	createAt: Date!
+	updateAt: Date!
 }
 
 type Huellas {
-  dedo: String!
-  id_empleado: String!
-}
-
-type Habilidades {
-  Habilidades: String!
-  IdHabilidades: Int!
-  datosHabilidades: Int!
-}
-
-type Formulario {
-  apellido: String!
-  dedo: String!
-  direccion: String!
-  email: String!
-  fech_nac: String!
-  id_empleado: String!
-  nombre: String!
-  Habilidades: String!
-  descHabilidades: String!
+  	huella: String!
+	uuid: ID!
+	createAt: String!
+	updateAt: String!
+	EmpleadoUuid: String!
 }
 
 type Query {
- hello: String!
+ hello: String!,
+ soluc_candidato(preg: String!): [EmpleadoD!]
 }
 
 type Mutation {
-  Formulario (apellido:String!,dedo:String!,direccion:String!,email:String!,fech_nac:String!,id_empleado:String!,nombre:String!,Habilidades:String!,descHabilidades:String!): Formulario!
+  Formulario (
+	nombre: String!,
+	apellido: String!,
+	email: String!,
+	direccion: String!,
+	fech_nac: String!,
+	estatus: Boolean!,
+	habilidades: String!,
+	habilidades_desc: String!,
+	  ): Empleado!
 }
 
 `;
